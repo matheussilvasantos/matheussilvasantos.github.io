@@ -1,14 +1,14 @@
-site: Sidey
+site: Matheus's Blog
 url: #yoururl
-title: Sidey
-description: Simple and minimalistic jekyll blogging theme.
+title: Matheus's Blog
+description: Opinions are my own
 twitter:
   username: #yourusername
   card: summary
   creator: #yourusername
 author:
   twitter: #yourusername
-  name: #yourusername
+  name: Matheus Silva
   avatar:
   email: #youremail
   url: #yoururl

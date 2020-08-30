@@ -1,16 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
- <title>Sidey</title>
+ <title>Matheus's Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2020-08-31T00:38:59+01:00</updated>
+ <updated>2020-08-31T00:53:48+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
-   <name></name>
+   <name>Matheus Silva</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Como Iterar em Ruby?</title>
+   <link href="http://localhost:4000/2020/08/31/como-iterar-em-ruby"/>
+   <updated>2020-08-31T00:00:00+01:00</updated>
+   <id>http://localhost:4000/2020/08/31/como-iterar-em-ruby</id>
+   <content type="html">&lt;h2 id=&quot;primeiras-impressões&quot;&gt;Primeiras Impressões&lt;/h2&gt;
+
+&lt;p&gt;Caso seja um iniciante na programação, estará muito acostumado com isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;for(int i = 0; i &amp;lt;= 10; i++) {
+        printf(&quot;%d&quot;, i);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Caso seja um pouco mais ousado, provavelmente já terá encontrado isso:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;elements.forEach(function(e) {
+  e.addClass('active');
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Para quem conhece só a primeira forma de iterar, o choque com as iterações em Ruby será maior. Para quem já conhece a segunda forma (que existe em outras linguagens de forma semelhante, mas não idêntica) não será tão impactante.&lt;/p&gt;
+
+&lt;p&gt;Aqui está a forma mais simples de iterar em Ruby:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;users.each do |user|
+  user.notify!
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Essa forma, não é a mais elegante, porém é bastante encontrada. Existe outra forma menos elegante, que é esta:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;for i in 0..10
+  puts i
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Mesmo essa forma, que pelo menos encontramos a palavra &lt;code&gt;for&lt;/code&gt; no meio, é bem diferente do que encontramos em outras linguagens. Minhas primeiras dúvidas quando vi essa iteração pela primeira vez foram:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Como faço se eu não quero incrementar de um em um?&lt;/li&gt;
+  &lt;li&gt;Onde está a condição?&lt;/li&gt;
+  &lt;li&gt;Como que eu itero do maior para o menor?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Esta forma de iterar é deveras limitada, você não consegue tudo com ela, porém, a linguagem Ruby é poderosa, elegante, carismática e bela, você consegue implementar o que quer de uma forma ou de outra. No entretanto, o que eu percebi nos meus primeiros dias usando Ruby, é que geralmente não precisamos iterar de uma forma tão imperativa, na verdade, podemos alcançar o que queremos de outras formas.&lt;/p&gt;
+
+&lt;h2 id=&quot;oito-tons-de-iteração&quot;&gt;Oito tons de iteração&lt;/h2&gt;
+
+&lt;h3 id=&quot;for&quot;&gt;for&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;for i in 0..10
+  puts i
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;times&quot;&gt;times&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;2.times { &quot;hello friend&quot; }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;3.times { |index| puts index }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;É nessa forma que as pessoas se apaixonam por Ruby, você está escrevendo um texto corrido praticamente. Quer executar alguma coisa quatro vezes? Ótimo, escreva &lt;code&gt;4.times { execute_your_beautiful_code }&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;each&quot;&gt;each&lt;/h3&gt;
+
+&lt;p&gt;Muitas pessoas conhecem esta forma de outras linguagens, você tem alguns elementos dentro de uma coleção e você quer iterar sobre eles.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;students.each { |student| student.call_for_re_enrollment! }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;while&quot;&gt;while&lt;/h3&gt;
+
+&lt;p&gt;Aqui você está livre para fazer o que quiser. Também temos essa opção em outras linguagens.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;i = 0
+while i &amp;lt; 10 do
+  puts i
+  i += 2 # pulando de dois em dois
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Essa opção é um pouco mais verbosa comparada com as outras, mas tem seus usos.&lt;/p&gt;
+
+&lt;p&gt;Aqui está um exemplo mais real de como essa iteração pode ser usada.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;waiting_seconds = 0
+while stack.deploying?
+  logger.info(&quot;Waiting for deployment to complete&quot;)
+  sleep waiting_seconds += 1
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;until&quot;&gt;until&lt;/h3&gt;
+
+&lt;p&gt;Como disse, essa linguagem é linda. &lt;code&gt;until&lt;/code&gt; é o contrário do &lt;code&gt;while&lt;/code&gt;, ela executará enquanto a condição for &lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;until me.tired?
+  me.work_hard
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;loop&quot;&gt;loop&lt;/h3&gt;
+
+&lt;p&gt;Se quiser ir para o infinito e além, use o &lt;code&gt;loop&lt;/code&gt; para criar um &lt;em&gt;loop&lt;/em&gt; infinito.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;loop do
+  # your code here..
+  break if your_condition
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;upto&quot;&gt;upto&lt;/h3&gt;
+
+&lt;p&gt;Muito claro o que isso faz pelo nome, expõe lindamente o que queremos, ir de um índice até outro, existe uma variação dessa forma que será o próximo tópico.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;1.upto(10) { |i| puts index }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;downto&quot;&gt;downto&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;10.downto(1) { |i| puts index }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;usando-iterações-como-se-você-tivesse-nascido-para-isso&quot;&gt;Usando Iterações como se Você Tivesse Nascido para Isso&lt;/h2&gt;
+
+&lt;h3 id=&quot;enumerable&quot;&gt;Enumerable&lt;/h3&gt;
+
+&lt;p&gt;Leia a documentação do &lt;a href=&quot;https://ruby-doc.org/core-2.7.0/Enumerable.html&quot;&gt;Enumerable&lt;/a&gt;. Veja os métodos que o módulo oferece, brinque com eles no terminal iterativo (IRB). É aqui que você elevará suas habilidades para se tornar o grande programador que o mundo quer conhecer. Com esse módulo você não somente ira iterar sobre listas, mas poderá transformá-las, reduzí-las, fazer perguntas, filtrar etc.&lt;/p&gt;
+
+&lt;h4 id=&quot;iterando-sobre-uma-fatia&quot;&gt;Iterando sobre uma fatia&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;[1, 2, 3, 4, 5, 6].each_slice(3) { |slice| puts slice }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;transformando&quot;&gt;Transformando&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;[1, 2, 3, 4].map { |number| { number.to_s =&amp;gt; number ** 2 } }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;reduzindo&quot;&gt;Reduzindo&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;[1, 2, 3, 4].reduce({ numbers: [] }) do |hash, number|
+  hash[:numbers] &amp;lt;&amp;lt; number
+  hash
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;questionando&quot;&gt;Questionando&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;[2, 4, 6, 8, 10].all?(&amp;amp;:even?)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;[1, 4, 3, 8, 9].select(&amp;amp;:even?)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;próximos-passos&quot;&gt;Próximos passos&lt;/h2&gt;
+
+&lt;p&gt;Essa pergunta no Stack Overflow para quem ficou com dúvidas sobre os últimos exemplos: &lt;a href=&quot;https://stackoverflow.com/questions/1217088/what-does-mapname-mean-in-ruby&quot;&gt;What does map(&amp;amp;:name) mean in Ruby?&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Leia a documentação da classe &lt;code&gt;Array&lt;/code&gt;, você encontrá vários métodos que você já viu no módulo &lt;code&gt;Enumerable&lt;/code&gt;, porém encontrá muita coisa nova também: &lt;a href=&quot;https://ruby-doc.org/core-2.7.0/Array.html&quot;&gt;&lt;code&gt;Array&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>What is Happening With my Block?</title>
