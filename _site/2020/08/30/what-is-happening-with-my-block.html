@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Jekyll v4.1.1" /><meta property="og:title" content="What is Happening With my Block?" /><meta property="og:locale" content="en_US" /><meta name="description" content="Do you know which tests are going to pass and which tests are going to fail in this test file?" /><meta property="og:description" content="Do you know which tests are going to pass and which tests are going to fail in this test file?" /><link rel="canonical" href="http://localhost:4000/2020/08/30/what-is-happening-with-my-block" /><meta property="og:url" content="http://localhost:4000/2020/08/30/what-is-happening-with-my-block" /><meta property="og:site_name" content="Sidey" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-08-30T00:00:00+01:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="What is Happening With my Block?" /><meta name="twitter:site" content="@" /> <script type="application/ld+json"> {"headline":"What is Happening With my Block?","dateModified":"2020-08-30T00:00:00+01:00","datePublished":"2020-08-30T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/08/30/what-is-happening-with-my-block"},"url":"http://localhost:4000/2020/08/30/what-is-happening-with-my-block","description":"Do you know which tests are going to pass and which tests are going to fail in this test file?","@type":"BlogPosting","@context":"https://schema.org"}</script><title> What is Happening With my Block? - Sidey</title><link rel="shortcut icon" href="/favicon.png"><link rel="alternate" type="application/atom+xml" title="Sidey" href="/atom.xml"><link rel="alternate" type="application/json" title="Sidey" href="http://localhost:4000/feed.json" /><link rel="sitemap" type="application/xml" title="sitemap" href="/sitemap.xml" /><style> *,:after,:before{box-sizing:border-box;background-color:inherit;color:inherit;margin:0;padding:0}body{font-family:system-ui, sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;font-size:1rem;color:#16171a}nav ul{border-right:1px solid #edf2f7}a{color:#000;text-decoration-skip-ink:auto;text-decoration:underline}pre{margin:.5rem 0;padding:.5rem}.post p{margin:.5rem 0}.post h1,.post h2,.post h3,.post h4{margin:1rem 0}.post h2:first-child,.project h2:first-child,.photo h2:first-child{margin-top:0}.meta{margin:2rem 0}code,pre{background:#ecedee}code{padding:.1rem}pre code{border:none}pre{padding:1rem;overflow-x:auto}img{max-width:100%}hr{background:#000;height:1px;border:0}header{flex-basis:10rem;flex-grow:1;position:relative}header a{text-decoration:none}header li{margin-bottom:.2rem;text-align:right;margin-right:2rem}header a.active{font-weight:bold}header,section{padding:1rem}blockquote{font-style:italic;border-left:5px solid #ececec;padding-left:1rem}h1,h2,h3,h4,h5{line-height:1;margin:1rem 0;font-weight:600}section h1:first-child{margin-top:0}strong,b{font-weight:bold}.photos ul{list-style:none}.photos li{margin-bottom:1.5rem}.photo picture,.project picture{margin-bottom:0.5rem}.posts ul,header ul{list-style:none}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.5rem}.posts li a,.posts li div,.projects li a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time,.projects li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}main{display:flex;flex-wrap:wrap;max-width:60rem;margin:2rem auto;padding:1rem}@media screen and (max-width: 45rem){header li{display:inline;margin-right:1rem}.logo{padding-bottom:1rem}header ul{border-bottom:1px solid #edf2f7;padding-bottom:2rem}nav ul{border-right:0px}.photos ul{margin-top:0.5rem}}section{flex-basis:0;flex-grow:999;min-width:70%;display:flex;flex-direction:column}figcaption{font-size:smaller}</style></head><body><main role="main"><header role="banner"> <!--<h1 class="logo">Sidey</h1>--><nav role="navigation"><ul><li><a href="/" >Writing</a></li><li><a href="/search" >Search</a></li><li><a href="/atom.xml" >Rss</a></li></ul></nav></header><section class="post"><h2>What is Happening With my Block?</h2><p>Do you know which tests are going to pass and which tests are going to fail in this test file?</p><pre><code class="language-ruby">require "minitest/autorun"
+
+class TestBlocks &lt; Minitest::Test
+  def setup
+    @values = ["a", "b", "c", "d"]
+  end
+  
+  def test_passing_a_block_with_do
+    assert @values.all? do |value|
+      false
+    end
+  end
+  
+  def test_passing_a_block_with_do_surround_by_parentheses
+    assert(@values.all? do |value|
+      false
+    end)
+  end
+  
+  def test_passing_a_block_with_braces
+    assert @values.all? { |value| false }
+  end
+end
+</code></pre><p>How do you do in your code base? If you do like in <code>test_passing_a_block_with_do</code> it is bad news.</p><p><code>test_passing_a_block_with_do</code> is the only one which is going to pass, but why? I know you know, <code>assert</code> receives <code>@values.all? do |value|</code> as a block, then it thinks this block is true and that’s it. If you thought that, you’re almost right. Let’s see what is <code>assert</code>.</p><pre><code class="language-ruby"># https://github.com/seattlerb/minitest/blob/6257210b7accfeb218b4388aaa36d3d45c5c41a5/lib/minitest/assertions.rb#L178
+def assert test, msg = nil
+  self.assertions += 1
+  unless test then
+    msg ||= "Expected #{mu_pp test} to be truthy."
+    msg = msg.call if Proc === msg
+    raise Minitest::Assertion, msg
+  end
+  true
+end
+</code></pre><p>So, is <code>test</code> a <code>Proc</code>? What do you think?</p><p>After debugging this method I know that <code>test</code> is <code>true</code>. Why is it <code>true</code>? The class is <code>TrueClass</code>, so it is a proper <code>true</code>. What is happening here?</p><p>What is <code>msg</code> then? <code>msg</code> is the <code>Proc</code> then, right?</p><pre><code class="language-ruby">(byebug) msg
+nil
+</code></pre><p><code>msg</code> is <code>nil</code>. Okay, it got the default value. Where is my block then? Well, there is only one place left now.</p><pre><code class="language-ruby">(byebug) yield
+false
+</code></pre><p>Ok, <code>false</code>. The block I’m passing is returning <code>false</code>, is that the reason? If I change to:</p><pre><code class="language-ruby">def test_passing_a_block_with_do
+  assert @values.all? do |value|
+    "hello, world!"
+  end
+end
+</code></pre><p>Then I have:</p><pre><code class="language-ruby">(byebug) yield
+"hello, world!"
+</code></pre><p>Ahhhh, that was it.</p><p>A mindful programmer would figure that out at first saw, there is no reason to think that the whole <code>collection.all? do...end</code> is going to be a single argument. However, I think it’s pretty easy to miss that, have you got it at first glance?</p><span class="meta"><time datetime="2020-08-30T00:00:00+01:00">August 30, 2020</time> &middot; </span></section></main></body></html>
