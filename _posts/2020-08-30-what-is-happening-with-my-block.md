@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "What is Happening With my Block?"
+tags: [ruby]
 ---
 
 Do you know which tests are going to pass and which tests are going to fail in this test file?

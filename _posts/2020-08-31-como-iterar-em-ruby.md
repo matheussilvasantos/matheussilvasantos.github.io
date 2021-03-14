@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Como Iterar em Ruby?"
+tags: [ruby]
 ---
 
 ## Primeiras Impressões
