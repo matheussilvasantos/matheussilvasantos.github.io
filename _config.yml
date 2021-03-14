@@ -1,62 +1,18 @@
-site: Matheus's Blog
-url: #yoururl
 title: Matheus's Blog
-description: Opinions are my own
-twitter:
-  username: #yourusername
-  card: summary
-  creator: #yourusername
-author:
-  twitter: #yourusername
-  name: Matheus Silva
-  avatar:
-  email: #youremail
-  url: #yoururl
-permalink: pretty
+author: Matheus Silva
+subtitle: Opinions are my own
 
+url: "https://matheussilvasantos.github.io"
 baseurl: ""
 
-highlighter: none
+footer_only_homepage: true
+footer_url: "https://github.com/matheussilvasantos"
+footer_text: ""
 
-exclude:
-  - .jekyll-cache
-  
-compress_html:
-  clippings: all
-  comments: ["<!-- ", " -->"]
+profile-picture:
+favicon_location:
 
+permalink: /:year-:month-:day-:title/
 sass:
-  sass_dir:          _sass
-  style:            :compressed
-
-plugins:
-  - jekyll-paginate
-  - jekyll-seo-tag
-  - jekyll-sitemap  
-
-collections:
-  pages:
-    output: true
-    permalink: /:name
-  posts:
-    output: true
-    permalink: /:year/:month/:day/:slug
-  
-defaults:
-  -
-    scope:
-      path: ""
-    values:
-      layout: "default"
-  -
-    scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "page"
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
+    style: compressed
+    sass_dir: css
