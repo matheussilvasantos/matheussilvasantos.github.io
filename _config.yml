@@ -3,6 +3,8 @@ author: Matheus Silva
 subtitle: Opinions are my own
 
 url: "https://matheussilvasantos.github.io"
+plugins:
+  - jekyll-sitemap
 baseurl: ""
 
 footer_only_homepage: true
