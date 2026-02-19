@@ -16,7 +16,7 @@ porque o júnior não tem a atitude correcta para confiar na IA o suficiente.
 O código gerado pela IA não precisa ser revisado, 100% das suas tarefas
 devem começar pela IA, o que devemos delegar a IA não tem limites.
 
-Espero que esse post comece a quebrar o preconceito contra o uso de AI nos
+Espero que este _post_ comece a quebrar o preconceito contra o uso de AI nos
 ambientes XGH. Este é um ponto que nem deveria ser discutido, porque me
 parece óbvio, e creio que esta é também a opinião de grande parde dos
 _XGH Specialists_ mais maduros, que a IA harmoniza muito bem com o
